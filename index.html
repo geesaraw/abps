@@ -22,7 +22,6 @@
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
     .version-badge { position:fixed; bottom:1.5rem; right:1.5rem; background:white; padding:1rem 1.8rem; border-radius:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.15); font-weight:600; z-index:100; border:1px solid #e2e8f0; }
 
-    /* Catalogue Styles */
     .rock-card { background:white; border-radius:1rem; box-shadow:0 10px 30px rgba(0,0,0,0.1); overflow:hidden; margin-bottom:2rem; transition:all 0.3s; }
     .rock-card:hover { box-shadow:0 20px 50px rgba(0,0,0,0.15); }
     .rock-header { background:linear-gradient(to right,var(--cyan),var(--purple)); color:white; padding:1.5rem; }
@@ -70,9 +69,8 @@
       <button @click="tab='catalog'" :class="tab==='catalog'?'tab-btn active':'tab-btn'">Rock Catalogue</button>
     </div>
 
-    <!-- GENERATE & DECODE TABS (unchanged) -->
+    <!-- GENERATE TAB -->
     <div x-show="tab==='generate'" class="card">
-      <!-- [Your existing Generate tab code — unchanged] -->
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Generate ABPS v1.0 Signature</h2>
       <div class="grid-2">
         <div>
@@ -84,6 +82,7 @@
               </template>
             </select>
           </div>
+
           <div class="mb-8" x-show="selectedMineralNames.length > 0">
             <label class="block mb-4 text-lg font-semibold">2. Assign Abundance</label>
             <div class="bg-gray-50 p-6 rounded-xl">
@@ -109,7 +108,7 @@
               </template>
             </div>
           </div>
-          <!-- Textures, Rock Name, Genetic Class, Protolith, Generate Button — unchanged -->
+
           <div class="mb-8">
             <label class="block mb-3 text-lg font-semibold">Textures</label>
             <select multiple size="8" x-model="form.textures" @change="filterRocks()" class="text-lg">
@@ -118,6 +117,7 @@
               </template>
             </select>
           </div>
+
           <div class="mb-8">
             <label class="block mb-3 text-lg font-semibold">Rock Name (auto-suggested)</label>
             <select x-model="form.rock_type" @change="autoFillFromRock()" class="text-lg">
@@ -136,6 +136,7 @@
               </template>
             </select>
           </div>
+
           <div class="grid grid-cols-2 gap-6 mb-8">
             <div>
               <label class="block mb-3 font-semibold">Genetic Class</label>
@@ -156,6 +157,7 @@
               </select>
             </div>
           </div>
+
           <button @click="generate()" class="w-full py-5 text-2xl font-bold">Generate v1.0 Signature</button>
         </div>
 
@@ -178,6 +180,7 @@
       </div>
     </div>
 
+    <!-- DECODE TAB -->
     <div x-show="tab==='decode'" class="card">
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Decode ABPS Signature</h2>
       <textarea x-model="decodeInput" rows="6" placeholder="Paste signature here" class="font-mono text-lg mb-8"></textarea>
@@ -187,7 +190,7 @@
       </div>
     </div>
 
-    <!-- FULLY FIXED CATALOGUE TAB -->
+    <!-- CATALOGUE TAB -->
     <div x-show="tab==='catalog'" class="card">
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Sri Lankan Rock Catalogue with Literature</h2>
       <button @click="loadFullCatalogue()" class="mb-10 px-10 py-5 text-2xl">
@@ -206,7 +209,6 @@
             <div class="rock-signature" x-text="rock.signature_code || 'Not generated'"></div>
           </div>
           <div class="rock-body">
-
             <!-- General Details -->
             <div x-show="rock.rock_details?.length">
               <h4 class="section-title">Rock Details</h4>
@@ -258,7 +260,6 @@
                     <p><strong>Occurrences:</strong> <span x-text="src.literature_rock_data.occurrences"></span></p>
                   </div>
 
-                  <!-- Reported Minerals from Literature -->
                   <div x-show="src.literature_rock_data?.minerals?.length">
                     <p><strong>Reported Minerals:</strong>
                       <template x-for="m in src.literature_rock_data.minerals">
@@ -270,11 +271,10 @@
                     </p>
                   </div>
 
-                  <!-- Reported Textures from Literature — NOW FIXED -->
                   <div x-show="src.literature_rock_data?.textures?.length">
                     <p><strong>Reported Textures:</strong>
                       <template x-for="t in src.literature_rock_data.textures">
-                        <span class="tag" x-text="t.literature_texture || t.texture_id"></span>
+                        <span class="tag" x-text="t.literature_texture"></span>
                       </template>
                     </p>
                   </div>
@@ -290,7 +290,7 @@
       </template>
     </div>
 
-    <div class="version-badge">ABPS v1.0 — Final Release</div>
+    <div class="version-badge">ABPS v1.0</div>
   </div>
 
   <script>
@@ -320,7 +320,6 @@
           try {
             const res = await fetch(`${BASE}/rockcatalogue-with-literature-api?include_literature=true`)
             const data = await res.json()
-            // Merge signature from get-rocks endpoint
             const signatureMap = new Map(this.rocks.map(r => [r.lithodeme.name, r.signature_code]))
             data.forEach(rock => {
               rock.signature_code = signatureMap.get(rock.rock_type) || null
@@ -332,7 +331,6 @@
           }
         },
 
-        // [All other functions unchanged: updateAbundanceOptions, removeMineral, filterRocks, autoFillFromRock, generate, decode, copy]
         updateAbundanceOptions() {
           this.selectedMineralNames.forEach(name => {
             if (!this.mineralAbundance[name]) this.mineralAbundance[name] = "major"
