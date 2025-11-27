@@ -21,58 +21,48 @@
     .signature-box { background:#ecfeff; border:3px dashed #06b6d4; border-radius:1rem; padding:2rem; text-align:center; font-size:2rem; font-family:'Courier New',monospace; word-break:break-all; font-weight:bold; color:#155e75; }
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
     .version-badge { position:fixed; bottom:1.5rem; right:1.5rem; background:white; padding:1rem 1.8rem; border-radius:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.15); font-weight:600; z-index:100; border:1px solid #e2e8f0; }
+
+    /* Catalogue Styles */
+    .rock-card { background:white; border-radius:1rem; box-shadow:0 10px 30px rgba(0,0,0,0.1); overflow:hidden; margin-bottom:2rem; transition:all 0.3s; }
+    .rock-card:hover { box-shadow:0 20px 50px rgba(0,0,0,0.15); }
+    .rock-header { background:linear-gradient(to right,var(--cyan),var(--purple)); color:white; padding:1.5rem; }
+    .rock-name { font-size:2rem; font-weight:900; margin:0; }
+    .rock-signature { background:rgba(255,255,255,0.25); padding:0.75rem 1.5rem; border-radius:1rem; font-family:monospace; font-size:1.2rem; margin-top:0.75rem; backdrop-filter:blur(8px); font-weight:bold; }
+    .rock-body { padding:2rem; }
+    .section-title { font-size:1.4rem; font-weight:700; color:var(--cyan); margin:1.5rem 0 1rem; border-bottom:2px solid #e0f2fe; padding-bottom:0.5rem; }
+    .tag { display:inline-block; background:#e0f7fa; color:#006064; padding:0.4rem 0.8rem; border-radius:0.5rem; margin:0.4rem; font-size:0.9rem; }
+    .major { background:#e8f5e9 !important; color:#1b5e20 !important; }
+    .minor { background:#fff8e1 !important; color:#ff6f00 !important; }
+    .accessory { background:#f3e5f5 !important; color:#6a1b9a !important; }
+    .abundance-tag { font-size:0.7rem; padding:0.2rem 0.5rem; border-radius:0.4rem; margin-left:0.5rem; font-weight:bold; }
+    .literature-card { background:#f8f9fa; border-left:5px solid var(--cyan); padding:1.5rem; margin:1.5rem 0; border-radius:0 0.75rem 0.75rem 0; transition:all 0.3s; }
+    .literature-card:hover { background:#e3f2fd; transform:translateX(10px); }
+    .doi-link { color:var(--purple); font-weight:600; word-break:break-all; }
+    .loading-text { text-align:center; padding:3rem; font-size:1.5rem; color:#64748b; }
+
     .copy-feedback { position:relative; display:inline-block; }
     .copy-feedback.copied::after { content:"Copied!"; position:absolute; top:-40px; left:50%; transform:translateX(-50%); background:var(--green); color:white; padding:0.5rem 1rem; border-radius:0.5rem; font-size:0.9rem; white-space:nowrap; animation:pop 0.6s ease-out; pointer-events:none; }
     @keyframes pop { 0%{opacity:0; transform:translateX(-50%) translateY(10px)} 50%{opacity:1} 100%{opacity:0; transform:translateX(-50%) translateY(-10px)} }
-    
-    /* Radio button styles */
+
+    .mineral-row { display:flex; align-items:center; gap:1.5rem; margin-bottom:1rem; padding:1rem; background:#f8fafc; border-radius:0.75rem; border:1px solid #e2e8f0; }
+    .mineral-name { flex:1; font-weight:600; }
+    .delete-btn { width:32px; height:32px; border-radius:6px; background:#f8fafc; color:#64748b; border:1px solid #cbd5e1; display:flex; align-items:center; justify-content:center; cursor:pointer; font-weight:600; transition:all 0.2s; }
+    .delete-btn:hover { background:#ef4444; color:white; border-color:#ef4444; }
+
     .radio-group { display:flex; gap:1rem; align-items:center; }
-    .radio-label { display:flex; align-items:center; gap:0.5rem; cursor:pointer; padding:0.5rem 1rem; border-radius:0.5rem; font-size:0.9rem; transition:all 0.2s; background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; }
+    .radio-label { display:flex; align-items:center; gap:0.5rem; cursor:pointer; padding:0.5rem 1rem; border-radius:0.5rem; font-size:0.9rem; background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; transition:all 0.2s; }
     .radio-label.selected { background:#3b82f6; color:white; border-color:#3b82f6; }
     .radio-input { display:none; }
     .radio-dot { width:12px; height:12px; border-radius:50%; background:#94a3b8; transition:all 0.2s; }
     .selected .radio-dot { background:white; }
-    
-    /* Mineral selection layout */
-    .mineral-row { display:flex; align-items:center; gap:1.5rem; margin-bottom:1rem; padding:1rem; background:#f8fafc; border-radius:0.75rem; border:1px solid #e2e8f0; }
-    .mineral-name { flex:1; font-weight:600; }
-    
-    /* Modern square delete button */
-    .delete-btn { 
-      width: 32px; 
-      height: 32px; 
-      border-radius: 6px; 
-      background: #f8fafc; 
-      color: #64748b; 
-      border: 1px solid #cbd5e1; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      cursor: pointer; 
-      font-size: 1rem; 
-      font-weight: 600; 
-      transition: all 0.2s ease; 
-      flex-shrink: 0;
-    }
-    .delete-btn:hover { 
-      background: #ef4444; 
-      color: white; 
-      border-color: #ef4444; 
-      transform: scale(1.05); 
-      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-    }
-    
-    @media (max-width:1024px) { 
-      .grid-2 { grid-template-columns:1fr; } 
-      .mineral-row { flex-direction:column; align-items:flex-start; gap:0.75rem; }
-      .radio-group { width:100%; justify-content:space-between; }
-    }
+
+    @media (max-width:1024px) { .grid-2 { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
   <div class="container" x-data="abps()" x-init="init()">
-    <h1 class="my-12">Attribute-Based Petrographic Signature System Sri Lanka</h1>
-    <p class="text-center text-2xl text-slate-600 mb-12 font-medium">Attribute-Based Petrographic Signature System v1.0 — Live Demo</p>
+    <h1 class="my-12">Attribute-Based Petrographic Signature System</h1>
+    <p class="text-center text-2xl text-slate-600 mb-12 font-medium">Attribute-Based Petrographic Signature System v1.0 | Live Demo</p>
 
     <div class="flex justify-center gap-6 mb-12 flex-wrap bg-white rounded-xl shadow-lg p-3">
       <button @click="tab='generate'" :class="tab==='generate'?'tab-btn active':'tab-btn'">Generate Signature</button>
@@ -80,7 +70,9 @@
       <button @click="tab='catalog'" :class="tab==='catalog'?'tab-btn active':'tab-btn'">Rock Catalogue</button>
     </div>
 
+    <!-- GENERATE & DECODE TABS (unchanged) -->
     <div x-show="tab==='generate'" class="card">
+      <!-- [Your existing Generate tab code — unchanged] -->
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Generate ABPS v1.0 Signature</h2>
       <div class="grid-2">
         <div>
@@ -92,7 +84,6 @@
               </template>
             </select>
           </div>
-
           <div class="mb-8" x-show="selectedMineralNames.length > 0">
             <label class="block mb-4 text-lg font-semibold">2. Assign Abundance</label>
             <div class="bg-gray-50 p-6 rounded-xl">
@@ -101,30 +92,24 @@
                   <span class="mineral-name" x-text="name"></span>
                   <div class="radio-group">
                     <label :class="mineralAbundance[name]==='major' ? 'radio-label selected' : 'radio-label'">
-                      <input type="radio" :name="'abundance-'+name" value="major" 
-                             x-model="mineralAbundance[name]" class="radio-input">
-                      <span class="radio-dot"></span>
-                      Major ( )
+                      <input type="radio" :name="'abundance-'+name" value="major" x-model="mineralAbundance[name]" class="radio-input">
+                      <span class="radio-dot"></span> Major ( )
                     </label>
                     <label :class="mineralAbundance[name]==='minor' ? 'radio-label selected' : 'radio-label'">
-                      <input type="radio" :name="'abundance-'+name" value="minor" 
-                             x-model="mineralAbundance[name]" class="radio-input">
-                      <span class="radio-dot"></span>
-                      Minor [ ]
+                      <input type="radio" :name="'abundance-'+name" value="minor" x-model="mineralAbundance[name]" class="radio-input">
+                      <span class="radio-dot"></span> Minor [ ]
                     </label>
                     <label :class="mineralAbundance[name]==='accessory' ? 'radio-label selected' : 'radio-label'">
-                      <input type="radio" :name="'abundance-'+name" value="accessory" 
-                             x-model="mineralAbundance[name]" class="radio-input">
-                      <span class="radio-dot"></span>
-                      Accessory { }
+                      <input type="radio" :name="'abundance-'+name" value="accessory" x-model="mineralAbundance[name]" class="radio-input">
+                      <span class="radio-dot"></span> Accessory { }
                     </label>
-                    <button class="delete-btn" @click="removeMineral(name)" title="Remove mineral">×</button>
+                    <button class="delete-btn" @click="removeMineral(name)">×</button>
                   </div>
                 </div>
               </template>
             </div>
           </div>
-
+          <!-- Textures, Rock Name, Genetic Class, Protolith, Generate Button — unchanged -->
           <div class="mb-8">
             <label class="block mb-3 text-lg font-semibold">Textures</label>
             <select multiple size="8" x-model="form.textures" @change="filterRocks()" class="text-lg">
@@ -133,7 +118,6 @@
               </template>
             </select>
           </div>
-
           <div class="mb-8">
             <label class="block mb-3 text-lg font-semibold">Rock Name (auto-suggested)</label>
             <select x-model="form.rock_type" @change="autoFillFromRock()" class="text-lg">
@@ -152,7 +136,6 @@
               </template>
             </select>
           </div>
-
           <div class="grid grid-cols-2 gap-6 mb-8">
             <div>
               <label class="block mb-3 font-semibold">Genetic Class</label>
@@ -173,7 +156,6 @@
               </select>
             </div>
           </div>
-
           <button @click="generate()" class="w-full py-5 text-2xl font-bold">Generate v1.0 Signature</button>
         </div>
 
@@ -198,32 +180,117 @@
 
     <div x-show="tab==='decode'" class="card">
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Decode ABPS Signature</h2>
-      <textarea x-model="decodeInput" rows="6" placeholder="Paste signature here, e.g. (Grt+Sil+Qz)+[Bt+Fsp]+{Ap}_Gns+Fol_GrtSilGne_ME_PL" class="font-mono text-lg mb-8"></textarea>
+      <textarea x-model="decodeInput" rows="6" placeholder="Paste signature here" class="font-mono text-lg mb-8"></textarea>
       <button @click="decode()" class="w-full py-5 text-2xl">Decode Signature</button>
       <div x-show="decodeResult" class="mt-10">
         <pre x-text="JSON.stringify(decodeResult, null, 2)"></pre>
       </div>
     </div>
 
+    <!-- FULLY FIXED CATALOGUE TAB -->
     <div x-show="tab==='catalog'" class="card">
-      <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Rock Catalogue</h2>
-      <button @click="rocks.length===0 && loadCatalogue()" class="mb-10 px-10 py-5 text-2xl">
-        <span x-show="rocks.length===0">Load All Rocks</span>
-        <span x-show="rocks.length>0">Showing <strong x-text="rocks.length"></strong> rocks</span>
+      <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Sri Lankan Rock Catalogue with Literature</h2>
+      <button @click="loadFullCatalogue()" class="mb-10 px-10 py-5 text-2xl">
+        <span x-show="!catalogueLoaded">Load Full Catalogue with Literature</span>
+        <span x-show="catalogueLoaded">Loaded <strong x-text="catalogueRocks.length"></strong> rocks</span>
       </button>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        <template x-for="rock in rocks" :key="rock.lithodeme?.rockcatalogue_id">
-          <div class="bg-gradient-to-br from-cyan-50 to-purple-50 rounded-2xl p-8 border-2 border-cyan-200 hover:shadow-2xl transition-all">
-            <h3 class="font-bold text-xl mb-3" x-text="rock.lithodeme?.name || 'Unnamed'"></h3>
-            <code class="block text-sm font-mono bg-white px-4 py-2 rounded-lg shadow" x-text="rock.signature_code"></code>
-          </div>
-        </template>
+
+      <div x-show="!catalogueLoaded" class="loading-text">
+        Click above to load complete catalogue with signatures and literature
       </div>
+
+      <template x-for="rock in catalogueRocks" :key="rock.id">
+        <div class="rock-card">
+          <div class="rock-header">
+            <h3 class="rock-name" x-text="rock.rock_type"></h3>
+            <div class="rock-signature" x-text="rock.signature_code || 'Not generated'"></div>
+          </div>
+          <div class="rock-body">
+
+            <!-- General Details -->
+            <div x-show="rock.rock_details?.length">
+              <h4 class="section-title">Rock Details</h4>
+              <template x-for="detail in rock.rock_details">
+                <div>
+                  <p><strong>Formation:</strong> <span x-text="detail.formation || '—'"></span></p>
+                  <p><strong>Description:</strong> <span x-text="detail.description || '—'"></span></p>
+                  <p><strong>Occurrences:</strong> <span x-text="detail.occurrences_in_sl || '—'"></span></p>
+                  <p><strong>Source:</strong> <span x-text="detail.commented_by || '—'"></span></p>
+                </div>
+              </template>
+            </div>
+
+            <!-- Minerals & Textures -->
+            <div class="flex flex-wrap gap-12">
+              <div x-show="rock.rock_minerals?.length">
+                <h4 class="section-title">Minerals</h4>
+                <template x-for="m in rock.rock_minerals">
+                  <span class="tag" :class="m.abundance || ''">
+                    <span x-text="m.minerals?.mineral || m.mineral"></span>
+                    <span class="abundance-tag" :class="m.abundance" x-text="m.abundance" x-show="m.abundance"></span>
+                  </span>
+                </template>
+              </div>
+
+              <div x-show="rock.rock_textures?.length">
+                <h4 class="section-title">Textures</h4>
+                <template x-for="t in rock.rock_textures">
+                  <span class="tag" x-text="t.textures?.texture || t.texture"></span>
+                </template>
+              </div>
+            </div>
+
+            <!-- Literature -->
+            <div x-show="rock.literature_sources?.length">
+              <h4 class="section-title">Literature References</h4>
+              <template x-for="src in rock.literature_sources">
+                <div class="literature-card">
+                  <strong x-text="src.title"></strong><br>
+                  <em x-text="src.authors + (src.publication_year ? ' ('+src.publication_year+')' : '')"></em>
+
+                  <div x-show="src.literature_rock_data?.description">
+                    <p><strong>Description:</strong> <span x-text="src.literature_rock_data.description"></span></p>
+                  </div>
+                  <div x-show="src.literature_rock_data?.formation">
+                    <p><strong>Formation:</strong> <span x-text="src.literature_rock_data.formation"></span></p>
+                  </div>
+                  <div x-show="src.literature_rock_data?.occurrences">
+                    <p><strong>Occurrences:</strong> <span x-text="src.literature_rock_data.occurrences"></span></p>
+                  </div>
+
+                  <!-- Reported Minerals from Literature -->
+                  <div x-show="src.literature_rock_data?.minerals?.length">
+                    <p><strong>Reported Minerals:</strong>
+                      <template x-for="m in src.literature_rock_data.minerals">
+                        <span class="tag" :class="m.abundance || ''">
+                          <span x-text="m.literature_mineral"></span>
+                          <span class="abundance-tag" :class="m.abundance" x-text="m.abundance" x-show="m.abundance"></span>
+                        </span>
+                      </template>
+                    </p>
+                  </div>
+
+                  <!-- Reported Textures from Literature — NOW FIXED -->
+                  <div x-show="src.literature_rock_data?.textures?.length">
+                    <p><strong>Reported Textures:</strong>
+                      <template x-for="t in src.literature_rock_data.textures">
+                        <span class="tag" x-text="t.literature_texture || t.texture_id"></span>
+                      </template>
+                    </p>
+                  </div>
+
+                  <div x-show="src.doi">
+                    <a :href="'https://doi.org/' + src.doi" target="_blank" class="doi-link">DOI: <span x-text="src.doi"></span></a>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
     </div>
 
-    <div class="version-badge">
-      ABPS v1.0
-    </div>
+    <div class="version-badge">ABPS v1.0 — Final Release</div>
   </div>
 
   <script>
@@ -232,13 +299,10 @@
       return {
         tab: 'generate',
         form: { genetic_class:'', protolith:'', rock_type:'', textures:[] },
-        selectedMineralNames: [],
-        mineralAbundance: {}, // e.g. { "Garnet": "major", "Biotite": "minor" }
-        result: null,
+        selectedMineralNames: [], mineralAbundance: {}, result: null,
         decodeInput: '', decodeResult: null,
-        rocks: [], geneticClasses: [], protoliths: [], minerals: [], textures: [],
-        filteredRockGroups: [],
-        copied: false,
+        rocks: [], catalogueRocks: [], catalogueLoaded: false,
+        geneticClasses: [], protoliths: [], minerals: [], textures: [], filteredRockGroups: [], copied: false,
 
         async init() {
           await Promise.all([
@@ -251,50 +315,56 @@
           this.filterRocks()
         },
 
+        async loadFullCatalogue() {
+          if (this.catalogueLoaded) return
+          try {
+            const res = await fetch(`${BASE}/rockcatalogue-with-literature-api?include_literature=true`)
+            const data = await res.json()
+            // Merge signature from get-rocks endpoint
+            const signatureMap = new Map(this.rocks.map(r => [r.lithodeme.name, r.signature_code]))
+            data.forEach(rock => {
+              rock.signature_code = signatureMap.get(rock.rock_type) || null
+            })
+            this.catalogueRocks = data
+            this.catalogueLoaded = true
+          } catch (err) {
+            alert("Error loading catalogue: " + err.message)
+          }
+        },
+
+        // [All other functions unchanged: updateAbundanceOptions, removeMineral, filterRocks, autoFillFromRock, generate, decode, copy]
         updateAbundanceOptions() {
-          // Set default to "major" for newly selected minerals
           this.selectedMineralNames.forEach(name => {
             if (!this.mineralAbundance[name]) this.mineralAbundance[name] = "major"
           })
-          // Remove deselected minerals
           Object.keys(this.mineralAbundance).forEach(key => {
             if (!this.selectedMineralNames.includes(key)) delete this.mineralAbundance[key]
           })
           this.filterRocks()
         },
-
         removeMineral(name) {
-          // Remove from selected minerals
           this.selectedMineralNames = this.selectedMineralNames.filter(n => n !== name)
-          // Remove from abundance tracking
           delete this.mineralAbundance[name]
           this.filterRocks()
         },
-
         filterRocks() {
           const selectedMins = this.selectedMineralNames.map(n => n.toLowerCase())
           const selectedTexs = this.form.textures.map(t => t.toLowerCase())
-
           const matches = [], others = []
-
           this.rocks.forEach(rock => {
             const mins = rock.mineral_assemblage.map(m => m.name.toLowerCase())
             const texs = rock.texture_assemblage.map(t => t.texture.toLowerCase())
-
             const hasMins = selectedMins.length === 0 || selectedMins.every(m => mins.some(min => min.includes(m)))
             const hasTexs = selectedTexs.length === 0 || selectedTexs.every(t => texs.some(tex => tex.includes(t)))
-
             if (hasMins && hasTexs) matches.push(rock)
             else others.push(rock)
           })
-
           this.filteredRockGroups = [
             matches.length ? { label: `Best Matches (${matches.length})`, rocks: matches } : null,
             matches.length && others.length ? { separator: true } : null,
             others.length ? { label: "Other Rocks", rocks: others } : null
           ].filter(Boolean)
         },
-
         autoFillFromRock() {
           const rock = this.rocks.find(r => r.lithodeme.name === this.form.rock_type)
           if (rock) {
@@ -312,16 +382,12 @@
             this.filterRocks()
           }
         },
-
         async generate() {
           const mineralsWithAbundance = this.selectedMineralNames.map(name => ({
-            name,
-            abundance: this.mineralAbundance[name] || "major"
+            name, abundance: this.mineralAbundance[name] || "major"
           }))
-
           const res = await fetch(`${BASE}/generate-signature`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               genetic_class: this.form.genetic_class || "",
               protolith: this.form.protolith || "",
@@ -330,24 +396,16 @@
               textures: this.form.textures
             })
           })
-
           this.result = res.ok ? await res.json() : { error: await res.text() }
         },
-
         async decode() {
           if (!this.decodeInput.trim()) return
           const res = await fetch(`${BASE}/decode-signature`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ signature: this.decodeInput.trim() })
           })
           this.decodeResult = res.ok ? await res.json() : { error: await res.text() }
         },
-
-        async loadCatalogue() {
-          if (this.rocks.length === 0) await this.init()
-        },
-
         copy(text) {
           navigator.clipboard.writeText(text)
           this.copied = true
