@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ABPS Sri Lanka v1.0</title>
+  <title>ABPS Sri Lanka v1.0 — Complete Reference System</title>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
     :root { --cyan: #0891b2; --purple: #7c3aed; --green: #16a34a; }
@@ -21,6 +21,14 @@
     .signature-box { background:#ecfeff; border:3px dashed #06b6d4; border-radius:1rem; padding:2rem; text-align:center; font-size:2rem; font-family:'Courier New',monospace; word-break:break-all; font-weight:bold; color:#155e75; }
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
     .version-badge { position:fixed; bottom:1.5rem; right:1.5rem; background:white; padding:1rem 1.8rem; border-radius:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.15); font-weight:600; z-index:100; border:1px solid #e2e8f0; }
+
+    /* Tables */
+    table { width:100%; border-collapse:collapse; margin:1.5rem 0; background:white; border-radius:0.75rem; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.08); }
+    th, td { padding:1rem 1.2rem; text-align:left; border-bottom:1px solid #e2e8f0; }
+    th { background:linear-gradient(to right,var(--cyan),var(--purple)); color:white; font-weight:700; }
+    tr:hover { background:#f8fafc; }
+    tr:last-child td { border-bottom:none; }
+    .table-title { font-size:1.8rem; font-weight:800; color:var(--cyan); margin:2rem 0 1rem; text-align:center; }
 
     /* Rock Catalogue */
     .rock-card { background:white; border-radius:1rem; box-shadow:0 10px 30px rgba(0,0,0,0.1); overflow:hidden; margin-bottom:2rem; transition:all 0.3s; }
@@ -56,7 +64,7 @@
     .radio-dot { width:12px; height:12px; border-radius:50%; background:#94a3b8; transition:all 0.2s; }
     .selected .radio-dot { background:white; }
 
-    /* Signature System Tab */
+    /* Info Tab */
     .info-card { background:#f0f9ff; border-left:6px solid var(--cyan); padding:2rem; margin:2rem 0; border-radius:0 1rem 1rem 0; }
     .info-title { font-size:1.8rem; font-weight:800; color:var(--cyan); margin-bottom:1rem; }
     .info-text { line-height:1.8; margin-bottom:1.5rem; }
@@ -69,16 +77,21 @@
 <body>
   <div class="container" x-data="abps()" x-init="init()">
     <h1 class="my-12">Attribute-Based Petrographic Signature System</h1>
-    <p class="text-center text-2xl text-slate-600 mb-12 font-medium">Attribute-Based Petrographic Signature System v1.0 | Live Demo</p>
+    <p class="text-center text-2xl text-slate-600 mb-12 font-medium">ABPS v1.0 — Complete Reference & Generation Platform</p>
 
-    <div class="flex justify-center gap-6 mb-12 flex-wrap bg-white rounded-xl shadow-lg p-3">
-      <button @click="tab='generate'" :class="tab==='generate'?'tab-btn active':'tab-btn'">Generate Signature</button>
-      <button @click="tab='decode'" :class="tab==='decode'?'tab-btn active':'tab-btn'">Decode Signature</button>
-      <button @click="tab='catalog'" :class="tab==='catalog'?'tab-btn active':'tab-btn'">Rock Catalogue</button>
-      <button @click="tab='info'" :class="tab==='info'?'tab-btn active':'tab-btn'">Signature System Information</button>
+    <div class="flex justify-center gap-4 mb-12 flex-wrap bg-white rounded-xl shadow-lg p-4 overflow-x-auto">
+      <button @click="tab='generate'"   :class="tab==='generate'  ?'tab-btn active':'tab-btn'">Generate</button>
+      <button @click="tab='decode'"     :class="tab==='decode'    ?'tab-btn active':'tab-btn'">Decode</button>
+      <button @click="tab='catalog'"    :class="tab==='catalog'   ?'tab-btn active':'tab-btn'">Rock Catalogue</button>
+      <button @click="tab='info'"       :class="tab==='info'      ?'tab-btn active':'tab-btn'">Signature System</button>
+      <button @click="tab='rocks'"      :class="tab==='rocks'     ?'tab-btn active':'tab-btn'">Rocks Table</button>
+      <button @click="tab='minerals'"   :class="tab==='minerals'  ?'tab-btn active':'tab-btn'">Minerals</button>
+      <button @click="tab='textures'"   :class="tab==='textures'  ?'tab-btn active':'tab-btn'">Textures</button>
+      <button @click="tab='genetic'"    :class="tab==='genetic'   ?'tab-btn active':'tab-btn'">Genetic Classes</button>
+      <button @click="tab='protoliths'" :class="tab==='protoliths'?'tab-btn active':'tab-btn'">Protoliths</button>
     </div>
 
-    <!-- ==================== GENERATE TAB ==================== -->
+    <!-- GENERATE TAB -->
     <div x-show="tab==='generate'" class="card">
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Generate ABPS v1.0 Signature</h2>
       <div class="grid-2">
@@ -144,7 +157,7 @@
           </div>
           <div class="grid grid-cols-2 gap-6 mb-8">
             <div>
-              <label class="block mb-3 fontlb-semibold">Genetic Class</label>
+              <label class="block mb-3 font-semibold">Genetic Class</label>
               <select x-model="form.genetic_class" class="text-lg">
                 <option value="" disabled>Select</option>
                 <template x-for="gc in geneticClasses">
@@ -182,8 +195,7 @@
         </div>
       </div>
     </div>
-
-    <!-- ==================== DECODE TAB ==================== -->
+    <!-- DECODE TAB -->
     <div x-show="tab==='decode'" class="card">
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Decode ABPS Signature</h2>
       <textarea x-model="decodeInput" rows="6" placeholder="Paste signature here" class="font-mono text-lg mb-8"></textarea>
@@ -192,7 +204,7 @@
         <pre x-text="JSON.stringify(decodeResult, null, 2)"></pre>
       </div>
     </div>
-
+    <!-- ROCK CATALOGUE TAB -->
     <!-- ==================== CATALOGUE TAB ==================== -->
     <div x-show="tab==='catalog'" class="card">
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">Sri Lankan Rock Catalogue with Literature</h2>
@@ -280,7 +292,6 @@
         </div>
       </template>
     </div>
-
     <!-- ==================== SIGNATURE SYSTEM INFO TAB ==================== -->
     <div x-show="tab==='info'" class="card">
       <h2 class="text-4xl font-bold mb-10 text-center text-slate-800">ABPS Signature System v1.0</h2>
@@ -293,51 +304,51 @@
         </ul>
       </div>
 
-<div class="info-card">
-    <div class="info-title">4.2 String-Based Signature</div>
-    <p class="info-text">A Signature code with 7 parts separated by underscores. Currently developed up to 5th Tier and require 6th and 7th Tier development that addresses microscopic features:</p>
-    <div class="example-box syntax">
-        (major minerals)+[minor minerals]+{accessory minerals}_texturecodes_lithodemecode_genetic_protolith_**microscopicfeatures_mineralchemistry**
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div>
-            <p class="font-semibold mb-2"><strong>Tier 1: Mineral Assemblages</strong></p>
-            <p>Within Parentheses ( ) Major minerals (&gt;10%)</p>
-            <p>Within Square Brackets [ ] Minor minerals (1–10%)</p>
-            <p>Within curly Brackets { } Accessory minerals (&lt;1%)</p>
-        </div>
-        <div>
-            <p class="font-semibold mb-2"><strong>Tier 2: Texture Codes</strong></p>
-            <p>_ texturecodes (e.g. Gns+Fol)</p>
-            <p class="font-semibold mb-2"><strong>Tier 3: Lithodemo Code</strong></p>
-            <p>_ lithodemecode (3–6 letters from catalogue)</p>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div>
-            <p class="font-semibold mb-2"><strong>Tier 4: Genetic Code</strong></p>
-            <p>_ genetic (2 letters)</p>
-            <p class="font-semibold mb-2"><strong>Tier 5: Protolith Code</strong></p>
-            <p>_ protolith (2 letters)</p>
-        </div>
-        <div>
-            <p class="font-semibold mb-2"><strong>Tier 6: Microscopic Features 1</strong></p>
-            <p class="font-semibold mb-2"><strong>Tier 7: Microscopic Features 2 / Mineral Chemistry</strong></p>
-        </div>
-    </div>
+      <div class="info-card">
+          <div class="info-title">4.2 String-Based Signature</div>
+          <p class="info-text">A Signature code with 7 parts separated by underscores. Currently developed up to 5th Tier and require 6th and 7th Tier development that addresses microscopic features:</p>
+          <div class="example-box syntax">
+              (major minerals)+[minor minerals]+{accessory minerals}_texturecodes_lithodemecode_genetic_protolith_**microscopicfeatures_mineralchemistry**
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div>
+                  <p class="font-semibold mb-2"><strong>Tier 1: Mineral Assemblages</strong></p>
+                  <p>Within Parentheses ( ) Major minerals (&gt;10%)</p>
+                  <p>Within Square Brackets [ ] Minor minerals (1–10%)</p>
+                  <p>Within curly Brackets { } Accessory minerals (&lt;1%)</p>
+              </div>
+              <div>
+                  <p class="font-semibold mb-2"><strong>Tier 2: Texture Codes</strong></p>
+                  <p>_ texturecodes (e.g. Gns+Fol)</p>
+                  <p class="font-semibold mb-2"><strong>Tier 3: Lithodemo Code</strong></p>
+                  <p>_ lithodemecode (3–6 letters from catalogue)</p>
+              </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div>
+                  <p class="font-semibold mb-2"><strong>Tier 4: Genetic Code</strong></p>
+                  <p>_ genetic (2 letters)</p>
+                  <p class="font-semibold mb-2"><strong>Tier 5: Protolith Code</strong></p>
+                  <p>_ protolith (2 letters)</p>
+              </div>
+              <div>
+                  <p class="font-semibold mb-2"><strong>Tier 6: Microscopic Features 1</strong></p>
+                  <p class="font-semibold mb-2"><strong>Tier 7: Microscopic Features 2 / Mineral Chemistry</strong></p>
+              </div>
+          </div>
 
-    <div class="info-title mt-8">🔬 Further Developments (Tiers 6 & 7)</div>
-    
-    <div class="tier-development">
-        <p class="font-semibold mb-2">**Tier 6: Microscopic Features 1**</p>
-        </div>
+          <div class="info-title mt-8">🔬 Further Developments (Tiers 6 & 7)</div>
+          
+          <div class="tier-development">
+              <p class="font-semibold mb-2">**Tier 6: Microscopic Features 1**</p>
+              </div>
 
-    <div class="tier-development mt-4">
-        <p class="font-semibold mb-2">**Tier 7: Microscopic Features 2 / Mineral Chemistry**</p>
-        </div>
+          <div class="tier-development mt-4">
+              <p class="font-semibold mb-2">**Tier 7: Microscopic Features 2 / Mineral Chemistry**</p>
+              </div>
 
-    <p class="info-text mt-6"><strong>Empty field = -</strong> → No ambiguity</p>
-</div>
+          <p class="info-text mt-6"><strong>Empty field = -</strong> → No ambiguity</p>
+      </div>
       <div class="info-card">
         <div class="info-title">Examples</div>
         <div class="example-box">
@@ -358,21 +369,103 @@
         <div class="info-title">4.2 JSON-Based Signature</div>
         <p class="info-text">Full machine-readable format with explicit fields:</p>
         <div class="example-box text-sm">
-{<br>
-&nbsp;&nbsp;"signature_code": "(Bt+Fsp+Grt+Qz)_BA+FO_GBgn_ME_PL",<br>
-&nbsp;&nbsp;"genetic_class": { "code": "ME", "class": "Metamorphic" },<br>
-&nbsp;&nbsp;"protolith": { "code": "PL", "protolith": "Pelitic" },<br>
-&nbsp;&nbsp;"rock_type_code": "GBgn",<br>
-&nbsp;&nbsp;"lithodeme": { "name": "Garnet-Biotite Gneiss" },<br>
-&nbsp;&nbsp;"mineral_assemblage": [ ... ],<br>
-&nbsp;&nbsp;"texture_assemblage": [ ... ],<br>
-&nbsp;&nbsp;"metadata": { "version": "1.0.0", "date_created": "2025-11-28" }<br>
-}
+          {<br>
+          &nbsp;&nbsp;"signature_code": "(Bt+Fsp+Grt+Qz)_BA+FO_GBgn_ME_PL",<br>
+          &nbsp;&nbsp;"genetic_class": { "code": "ME", "class": "Metamorphic" },<br>
+          &nbsp;&nbsp;"protolith": { "code": "PL", "protolith": "Pelitic" },<br>
+          &nbsp;&nbsp;"rock_type_code": "GBgn",<br>
+          &nbsp;&nbsp;"lithodeme": { "name": "Garnet-Biotite Gneiss" },<br>
+          &nbsp;&nbsp;"mineral_assemblage": [ ... ],<br>
+          &nbsp;&nbsp;"texture_assemblage": [ ... ],<br>
+          &nbsp;&nbsp;"metadata": { "version": "1.0.0", "date_created": "2025-11-28" }<br>
+          }
         </div>
       </div>
     </div>
+    <!-- NEW: 5 REFERENCE TABLES -->
+    <div x-show="tab==='rocks'" class="card">
+      <h2 class="table-title">Rock Catalogue Summary (from get-rocks)</h2>
+      <div x-show="rocks.length === 0" class="loading-text">Loading rocks...</div>
+      <table x-show="rocks.length > 0">
+        <thead><tr><th>Rock Type</th><th>Code</th><th>Signature</th><th>Genetic</th><th>Protolith</th></tr></thead>
+        <tbody>
+          <template x-for="r in rocks" :key="r.lithodeme.rockcatalogue_id">
+            <tr>
+              <td x-text="r.lithodeme.name"></td>
+              <td><strong x-text="r.rock_type_code"></strong></td>
+              <td><code x-text="r.signature_code"></code></td>
+              <td x-text="r.genetic_class?.class || '-'"></td>
+              <td x-text="r.protolith?.protolith || '-'"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
 
-    <div class="version-badge">ABPS v1.0 — Final Release</div>
+    <div x-show="tab==='minerals'" class="card">
+      <h2 class="table-title">Minerals Reference Table</h2>
+      <table>
+        <thead><tr><th>Mineral</th><th>Code</th><th>IMA Status</th></tr></thead>
+        <tbody>
+          <template x-for="m in minerals" :key="m.id">
+            <tr>
+              <td x-text="m.mineral"></td>
+              <td><strong x-text="m.code || '-'"></strong></td>
+              <td x-text="m.ima_status || '-'"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    <div x-show="tab==='textures'" class="card">
+      <h2 class="table-title">Textures Reference Table</h2>
+      <table>
+        <thead><tr><th>Texture</th><th>Code</th></tr></thead>
+        <tbody>
+          <template x-for="t in textures" :key="t.id">
+            <tr>
+              <td x-text="t.texture"></td>
+              <td><strong x-text="t.code || '-'"></strong></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    <div x-show="tab==='genetic'" class="card">
+      <h2 class="table-title">Genetic Classes</h2>
+      <table>
+        <thead><tr><th>Code</th><th>Class</th><th>Description</th></tr></thead>
+        <tbody>
+          <template x-for="gc in geneticClasses" :key="gc.id">
+            <tr>
+              <td><strong x-text="gc.code"></strong></td>
+              <td x-text="gc.class"></td>
+              <td x-text="gc.description || '-'"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    <div x-show="tab==='protoliths'" class="card">
+      <h2 class="table-title">Protoliths Reference</h2>
+      <table>
+        <thead><tr><th>Code</th><th>Protolith</th><th>Typical Occurrences</th></tr></thead>
+        <tbody>
+          <template x-for="p in protoliths" :key="p.id">
+            <tr>
+              <td><strong x-text="p.code"></strong></td>
+              <td x-text="p.protolith"></td>
+              <td x-text="p.typical_occurrences || '-'"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="version-badge">ABPS v1.0 — Complete System</div>
   </div>
 
   <script>
@@ -403,14 +496,10 @@
             const res = await fetch(`${BASE}/rockcatalogue-with-literature-api?include_literature=true`)
             const data = await res.json()
             const signatureMap = new Map(this.rocks.map(r => [r.lithodeme.name, r.signature_code]))
-            data.forEach(rock => {
-              rock.signature_code = signatureMap.get(rock.rock_type) || null
-            })
+            data.forEach(rock => rock.signature_code = signatureMap.get(rock.rock_type) || null)
             this.catalogueRocks = data
             this.catalogueLoaded = true
-          } catch (err) {
-            alert("Error loading catalogue: " + err.message)
-          }
+          } catch (err) { alert("Error: " + err.message) }
         },
 
         updateAbundanceOptions() {
